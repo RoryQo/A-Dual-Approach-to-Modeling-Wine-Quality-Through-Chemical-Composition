@@ -1,5 +1,41 @@
  # Identifying Chemical Drivers of Top-Tier Wines Using Logistic Regression and XGBoost
 
+
+
+
+<div align="center">
+
+<table>
+  <tr>
+    <td colspan="2" align="center" style="background-color: white; color: black;"><strong>Table of Contents</strong></td>
+  </tr>
+  <tr>
+    <td style="background-color: white; color: black; padding: 10px;">1. <a href="#project-objective" style="color: black;">Overview</a></td>
+    <td style="background-color: gray; color: black; padding: 10px;">6. <a href="#xgboost" style="color: black;">XGBoost</a></td>
+  </tr>
+  <tr>
+    <td style="background-color: gray; color: black; padding: 10px;">2. <a href="#data-description-and-preprocessing" style="color: black;">Data Description and Preprocessing</a></td>
+    <td style="background-color: white; color: black; padding: 10px;">7. <a href="#comparative-summary" style="color: black;">Comparative Summary</a></td>
+  </tr>
+  <tr>
+    <td style="background-color: white; color: black; padding: 10px;">3. <a href="#logistic-regression" style="color: black;">Logistic Regression</a></td>
+    <td style="background-color: gray; color: black; padding: 10px;">8. <a href="#conclusion" style="color: black;">Conclusion</a></td>
+  </tr>
+  <tr>
+    <td style="background-color: gray; color: black; padding: 10px;">4. <a href="#interpretation-and-results" style="color: black;">Interpretation and Results</a></td>
+    <td style="background-color: white; color: black; padding: 10px;">9. <a href="#diagnostics-and-model-validity" style="color: black;">Diagnostics and Model Validity</a></td>
+  </tr>
+  <tr>
+    <td style="background-color: white; color: black; padding: 10px;">5. <a href="#final-model-specification" style="color: black;">Final Model Specification</a></td>
+    <td style="background-color: gray; color: black; padding: 10px;">10. <a href="#future-work" style="color: black;">Future Work</a></td>
+  </tr>
+</table>
+
+</div>
+
+
+
+
 ## Project Objective
 
 This project investigates which **chemical properties** make a wine **high quality**—defined here as wines with a quality rating of **7 or higher**. Instead of relying on a single modeling strategy, we approach this problem from **two complementary perspectives**:

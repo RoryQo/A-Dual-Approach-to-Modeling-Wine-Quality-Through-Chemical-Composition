@@ -80,10 +80,18 @@ $$
 \log\left(\frac{\Pr(Y_i = 1)}{\Pr(Y_i = 0)}\right) = \beta_0 + \sum_{j=1}^{p} \beta_j X_{ij}
 $$
 
-Initial modeling revealed:
-- High **multicollinearity** (VIFs > 10)
-- Low **recall** (~37%) for high-quality wines
-- Overfitting risk from redundant features
+Initial modeling of wine quality using logistic regression revealed three key issues that limited the model’s effectiveness:
+
+- **High multicollinearity (VIFs > 8):**  
+  Several chemical variables—particularly those related to acidity, alcohol, and density—were strongly correlated. This multicollinearity inflated the standard errors of coefficient estimates, making it difficult to determine which chemical properties were genuinely associated with higher wine quality. As a result, individual variable effects became statistically unstable and harder to interpret with confidence.
+
+- **Low recall (~37%) for high-quality wines:**  
+  Using a default classification threshold, the model correctly identified only about one-third of the wines rated 7 or higher. This low recall meant the model frequently missed truly high-quality wines (false negatives)—a critical failure given that the goal is to reliably flag top-tier products based on chemistry.
+
+- **Overfitting risk from redundant features:**  
+  Including many overlapping or collinear predictors—such as different acidity measures and density—introduced unnecessary model complexity. This raised the risk of overfitting to the training data, capturing noise rather than meaningful signal. In a scientific context where we aim to generalize insights about chemical contributions to quality, this undermines both performance and credibility.
+
+These issues motivated several key model refinements, including feature combination, stepwise variable selection, and class-balancing techniques to improve recall without sacrificing interpretability or generalizability.
 
 
 
@@ -366,11 +374,11 @@ In contrast, **gain** only captures how often a feature appears in high-informat
 
 | Rank | GLM Top Features     | XGBoost Top Features  |
 |------|----------------------|-----------------------|
-| 1    | Chlorides            | Alcohol               |
-| 2    | Sulphates            | Sulphates             |
-| 3    | Citric Acid          | Volatile Acidity      |
-| 4    | Alcohol              | Citric Acid           |
-| 5    | Volatile Acidity     | Sulfur Dioxide        |
+| 1    | Chlorides            | **Alcohol**              |
+| 2    | **Sulphates**           | **Sulphates**            |
+| 3    | **Citric Acid**         | **Volatile Acidity**      |
+| 4    | **Alcohol**              | **Citric Acid**           |
+| 5    | **Volatile Acidity**     | Sulfur Dioxide        |
 
 
 **Key takeaways**:
@@ -378,7 +386,7 @@ In contrast, **gain** only captures how often a feature appears in high-informat
 - **Alcohol and Sulphates** appear as top contributors in both models and are consistent with wine chemistry theory—confirming their robustness.
 - **Volatile Acidity** is also negatively associated with high quality across both approaches.
 - **Citric Acid** and **Sulfur Dioxide** appear in both models but rank lower in influence.
-- **Chlorides** appears important in the GLM due to its scale and statistical significance, but **SHAP revealed minimal actual contribution** in the tree-based model—highlighting the value of using multiple modeling lenses.
+- **Chlorides** Appears important in the GLM due to its scale, but after taking scale into account, a reasonable step in chlorides decreases chances of quality wine by 12.9%. Shap also confirms **minimal actual contribution** in the tree-based model—highlighting the value of using multiple modeling lenses.
 - **No interaction terms** emerged as meaningful in XGBoost, and all interaction terms explored in the GLM (e.g., Citric Acid × Sulfur Dioxide, Residual Sugar × pH) were dropped due to multicollinearity and minimal improvement in fit.
 - Importantly, **only one observation was misclassified as a false negative in both models**, showing that the GLM and XGBoost agreed on nearly all borderline cases despite methodological differences.
 - While GLM provides **statistical clarity and coefficient-level insight**, XGBoost allows for **flexibility and robustness to feature correlation**—offering a complementary perspective.

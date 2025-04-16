@@ -1,4 +1,4 @@
- # Identifying Chemical Drivers of Top-Tier Wines Using Logistic Regression and XGBoost
+<h1 align="center">Modeling Wine Quality Through Chemical Composition: A Dual Approach</h1>
 
 
 

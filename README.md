@@ -126,22 +126,16 @@ Rather than dropping one variable arbitrarily, this preserves useful variation w
 
 ### 2. Stepwise Feature Selection
 
-Stepwise AIC (both forward and backward) yielded the final predictors:
-- Volatile Acidity
-- Citric Acid
-- Chlorides
-- Total Sulfur Dioxide
-- pH
-- Sulphates
-- Alcohol
+Stepwise AIC (both **forward** and **backward**) was used to select the most predictive and statistically sound set of features.
 
 **Why this helps**:
 - Excludes variables that do not contribute meaningful independent signal  
 - Automatically removes predictors whose contribution is confounded by others  
 - Reduces the chance of including variables that exacerbate multicollinearity
 
+**Why both directions?**  
 
-
+ We specifically used **both forward and backward selection** to address the **“greediness”** of forward-only procedures, which tend to lock in variables that seem optimal early on but may become redundant as better combinations emerge. Allowing the model to add and remove variables iteratively leads to a more stable, globally optimal solution in terms of AIC and model interpretability.
 
 
 ### 3. Validation: Retaining Predictive Power (ROC Curve)

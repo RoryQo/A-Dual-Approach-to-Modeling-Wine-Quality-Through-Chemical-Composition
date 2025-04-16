@@ -229,6 +229,12 @@ Then:
 \log\left(\frac{\Pr(Y_i = 1)}{\Pr(Y_i = 0)}\right) = \beta_0 + \beta_1 \cdot \text{VolatileAcidity}_i + \ldots + \beta_7 \cdot \text{Alcohol}_i
 ```
 
+<br>
+
+<p align="center">
+  <img src="https://github.com/RoryQo/A-Dual-Approach-to-Modeling-Wine-Quality-Through-Chemical-Composition/blob/main/Figures/xgclassopt.jpg?raw=true" width="200px" />
+</p>
+
 
 Together, these steps ensured that:
 - All retained features had **Variance Inflation Factors (VIFs) < 2.5**  
@@ -301,6 +307,12 @@ Where:
 
 ### 1. Initial Model Performance
 
+
+<p align="center">
+  <img src="https://github.com/RoryQo/A-Dual-Approach-to-Modeling-Wine-Quality-Through-Chemical-Composition/blob/main/Figures/xgogcm.jpg?raw=true" width="300px" />
+</p>
+
+
 - High accuracy  
 - **Low recall for high-quality wines**  
 - Threshold = 0.5 was not suitable due to class imbalance
@@ -337,6 +349,13 @@ Lowering the threshold shifts the model’s decision rule to favor more **true p
 
 ### 4. Post-Tuning Performance Assessment
 
+
+<p align="center">
+   <img src="https://github.com/RoryQo/A-Dual-Approach-to-Modeling-Wine-Quality-Through-Chemical-Composition/blob/main/Figures/xgopt.jpg?raw=true" width="300px" />
+  <img src="https://github.com/RoryQo/A-Dual-Approach-to-Modeling-Wine-Quality-Through-Chemical-Composition/blob/main/Figures/xgopclass.jpg?raw=true" width="250px" />
+</p>
+
+
 - ROC and Precision-Recall curves confirmed higher recall  
 - Cross-validation confirmed model generalizability and robustness
 
@@ -346,6 +365,7 @@ After SMOTE and threshold tuning, it was critical to verify that performance gai
 - Evaluating performance via **10-fold cross-validation**
 
 we ensured that improvements in recall were **genuine**, and the model remained **stable across different training splits**. This validation step confirmed that XGBoost was now **well-calibrated** for identifying high-quality wines in an imbalanced setting.
+
 
 
 
@@ -375,26 +395,50 @@ In contrast, **gain** only captures how often a feature appears in high-informat
 
 ### SHAP Results
 
-| Rank | Feature              | SHAP Interpretation                    |
-|------|----------------------|----------------------------------------|
-| 1    | Alcohol              | Strong, monotonic positive effect      |
-| 2    | Sulphates            | Strong, consistent positive effect     |
-| 3    | Volatile Acidity     | Strong negative effect                 |
-| 4    | Citric Acid          | Moderate positive impact               |
-| 5    | Total Sulfur Dioxide| Small negative impact                   |
 
+<div align="center">
+  <img src="https://github.com/RoryQo/A-Dual-Approach-to-Modeling-Wine-Quality-Through-Chemical-Composition/blob/main/Figures/shap.png?raw=true" width="450px" />
+
+  <br><br>
+
+  <table>
+    <tr>
+      <th>Rank</th>
+      <th>Feature</th>
+      <th>SHAP Interpretation</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Alcohol</td>
+      <td>Strong, monotonic positive effect</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Sulphates</td>
+      <td>Strong, consistent positive effect</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Volatile Acidity</td>
+      <td>Strong negative effect</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Citric Acid</td>
+      <td>Moderate positive impact</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Total Sulfur Dioxide</td>
+      <td>Small negative impact</td>
+    </tr>
+  </table>
+</div>
 
 
 
 ## Comparative Summary
 
-| Rank | GLM Top Features     | XGBoost Top Features  |
-|------|----------------------|-----------------------|
-| 1    | Chlorides            | **Alcohol**              |
-| 2    | **Sulphates**           | **Sulphates**            |
-| 3    | **Citric Acid**         | **Volatile Acidity**      |
-| 4    | **Alcohol**              | **Citric Acid**           |
-| 5    | **Volatile Acidity**     | Sulfur Dioxide        |
 
 
 **Key takeaways**:
@@ -406,6 +450,15 @@ In contrast, **gain** only captures how often a feature appears in high-informat
 - **No interaction terms** emerged as meaningful in XGBoost, and all interaction terms explored in the GLM (e.g., Citric Acid × Sulfur Dioxide, Residual Sugar × pH) were dropped due to multicollinearity and minimal improvement in fit.
 - Importantly, **only one observation was misclassified as a false negative in both models**, showing that the GLM and XGBoost agreed on nearly all borderline cases despite methodological differences.
 - While GLM provides **statistical clarity and coefficient-level insight**, XGBoost allows for **flexibility and robustness to feature correlation**—offering a complementary perspective.
+
+| Rank | GLM Top Features     | XGBoost Top Features  |
+|------|----------------------|-----------------------|
+| 1    | Chlorides            | **Alcohol**              |
+| 2    | **Sulphates**           | **Sulphates**            |
+| 3    | **Citric Acid**         | **Volatile Acidity**      |
+| 4    | **Alcohol**              | **Citric Acid**           |
+| 5    | **Volatile Acidity**     | Sulfur Dioxide        |
+
 
 ## Conclusion
 

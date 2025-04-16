@@ -1,5 +1,4 @@
-# Wine Quality Classification  
-**Identifying Chemical Drivers of Top-Tier Wines Using Logistic Regression and XGBoost**
+ # Identifying Chemical Drivers of Top-Tier Wines Using Logistic Regression and XGBoost
 
 ## Project Objective
 
@@ -21,13 +20,13 @@ By comparing these approaches, we aim to **extract a stable, converging set of c
 - High multicollinearity, especially among acidity, alcohol, and density
 - Binary target variable defined as:
 
-$$
+```math
 Y_i =
 \begin{cases}
 1 & \text{if quality}_i \geq 7 \\
 0 & \text{otherwise}
 \end{cases}
-$$
+```
 
 ### Class Distribution
 
@@ -183,15 +182,16 @@ Together, these steps ensured that:
 
 #### 1. Coefficient Interpretation
 
-| Predictor               | Estimate (β) | Odds Ratio (exp(β)) | Direction | Interpretation |
-|-|||--|-|
-| Alcohol                 | +1.07         | 2.91                   | ↑         | 1% ↑ alcohol → nearly 3× odds of high quality |
-| Sulphates               | +3.28         | 26.6                   | ↑         | 1-unit ↑ → 26.6× odds |
-| Citric Acid             | +1.36         | 3.90                   | ↑         | Moderate positive impact |
-| Chlorides               | −2.52         | 0.08                   | ↓         | 0.01-unit ↑ → ~12.4% ↓ odds |
-| Volatile Acidity        | −3.25         | 0.04                   | ↓         | Strong negative effect |
-| pH                      | −1.59         | 0.20                   | ↓         | Higher pH → lower odds |
-| Total Sulfur Dioxide    | −0.01         | ~0.99                  | ↓         | Slight negative effect |
+| Predictor             | Estimate (β) | Odds Ratio | Direction | Interpretation                                     |
+|-----------------------|--------------|------------|-----------|---------------------------------------------------|
+| Alcohol               | +1.07        | 2.91       | ↑         | 1% increase in alcohol → nearly 3× odds           |
+| Sulphates             | +3.28        | 26.6       | ↑         | 1-unit increase → 26.6× odds                      |
+| Citric Acid           | +1.36        | 3.90       | ↑         | Moderate positive impact                          |
+| Chlorides             | −2.52        | 0.08       | ↓         | 0.01-unit increase → ~12.4% decrease in odds      |
+| Volatile Acidity      | −3.25        | 0.04       | ↓         | Strong negative effect                            |
+| pH                    | −1.59        | 0.20       | ↓         | Higher pH associated with lower odds              |
+| Total Sulfur Dioxide  | −0.01        | ~0.99      | ↓         | Slight negative effect                            |
+
 
 All predictors are statistically significant at **p < 0.05**.
 
@@ -199,7 +199,7 @@ All predictors are statistically significant at **p < 0.05**.
 
 #### 2. Model Fit: McFadden’s $\( R^2 \)$
 
-McFadden’s pseudo-$\( R^2 \)$ is defined as:
+McFadden’s pseudo- $\( R^2 \)$ is defined as:
 
 ```math
 R^2_{\text{McFadden}} = 1 - \frac{\log L_{\text{model}}}{\log L_{\text{null}}}
@@ -315,20 +315,21 @@ In contrast, **gain** only captures how often a feature appears in high-informat
 
 ### SHAP Results
 
-| Rank | Feature              | SHAP Interpretation |
-||-|-|
-| 1    | Alcohol              | Strong monotonic ↑ effect |
-| 2    | Sulphates            | Strong, consistent ↑ effect |
-| 3    | Volatile Acidity     | Strong negative effect |
-| 4    | Citric Acid          | Moderate positive impact |
-| 5    | Total Sulfur Dioxide| Small negative impact |
+| Rank | Feature              | SHAP Interpretation                    |
+|------|----------------------|----------------------------------------|
+| 1    | Alcohol              | Strong, monotonic positive effect      |
+| 2    | Sulphates            | Strong, consistent positive effect     |
+| 3    | Volatile Acidity     | Strong negative effect                 |
+| 4    | Citric Acid          | Moderate positive impact               |
+| 5    | Total Sulfur Dioxide| Small negative impact                   |
+
 
 
 
 ## Comparative Summary
 
 | Rank | GLM Top Features     | XGBoost Top Features  |
-||-|--|
+|------|----------------------|-----------------------|
 | 1    | Chlorides            | Alcohol               |
 | 2    | Sulphates            | Sulphates             |
 | 3    | Citric Acid          | Volatile Acidity      |

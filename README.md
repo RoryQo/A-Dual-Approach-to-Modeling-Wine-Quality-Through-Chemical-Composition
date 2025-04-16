@@ -80,7 +80,16 @@ $$
 \log\left(\frac{\Pr(Y_i = 1)}{\Pr(Y_i = 0)}\right) = \beta_0 + \sum_{j=1}^{p} \beta_j X_{ij}
 $$
 
+
+
+
 Initial modeling of wine quality using logistic regression revealed three key issues that limited the model’s effectiveness:
+
+<p align="center">
+  <img src="https://github.com/RoryQo/A-Dual-Approach-to-Modeling-Wine-Quality-Through-Chemical-Composition/blob/main/Figures/ogvif.jpg?raw=true" width=300px />
+  <img src="https://github.com/RoryQo/A-Dual-Approach-to-Modeling-Wine-Quality-Through-Chemical-Composition/blob/main/Figures/ogclass.jpg?raw=true" width=200px />
+</p>
+
 
 - **High multicollinearity (VIFs > 8):**  
   Several chemical variables—particularly those related to acidity, alcohol, and density—were strongly correlated. This multicollinearity inflated the standard errors of coefficient estimates, making it difficult to determine which chemical properties were genuinely associated with higher wine quality. As a result, individual variable effects became statistically unstable and harder to interpret with confidence.
@@ -104,6 +113,7 @@ A composite feature was constructed:
 ```math
 \text{density\_combined}_i = 0.6815 \cdot \text{FixedAcidity}_i - 0.4947 \cdot \text{Alcohol}_i
 ```
+This feature was derived using weights informed by the correlation matrix, specifically targeting the strong positive correlation between FixedAcidity and Alcohol.
 
 **Why this helps**:
 - Reduces the dimension of the collinear subspace  
@@ -146,7 +156,9 @@ By validating against the **Receiver Operating Characteristic (ROC) curve**, we 
 
 This step confirmed that our model improvements enhanced **robustness and stability** without sacrificing predictive effectiveness.
 
-
+<p align="center">
+  <img src="https://github.com/RoryQo/A-Dual-Approach-to-Modeling-Wine-Quality-Through-Chemical-Composition/blob/main/Figures/rocos.png?raw=true" width="400px" />
+</p>
 
 ### 4. Addressing Class Imbalance with SMOTE
 
@@ -196,6 +208,10 @@ By re-checking the ROC AUC and applying **cross-validation**:
 - We confirmed that the model generalized well  
 - There was **no leakage or distortion** from synthetic samples  
 - Performance improvements were genuine and not artifacts of oversampling
+
+<p align="center">
+  <img src="https://github.com/RoryQo/A-Dual-Approach-to-Modeling-Wine-Quality-Through-Chemical-Composition/blob/main/Figures/rocsmote.png?raw=true" width="400px" />
+</p>
 
 
 
